@@ -114,6 +114,17 @@ class ProductControllers{
             console.log(error);
         }
     }
+    static productdelete = async(req,res)=>{
+        try{
+            await ProductModel.findByIdAndDelete(req.params.id)
+            res.status(201).json({
+                status: 'success',
+                message: 'Delete Successfully',
+              })
+        }catch(error){
+            console.log(error);
+        }
+    }
 
 
 }

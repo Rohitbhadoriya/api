@@ -26,4 +26,5 @@ router.post('/createproduct',ProductControllers.createproduct)
 router.get('/getallproduct',ProductControllers.getallproduct)
 router.get('/getallproductdetail/:id',ProductControllers.getallproductdetail)
 router.post('/updateproduct/:id',ProductControllers.updateproduct)
+router.get('/productdelete/:id',ProductControllers.productdelete)
 module.exports = router
