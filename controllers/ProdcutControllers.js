@@ -65,7 +65,7 @@ class ProductControllers {
     static updateproduct = async (req, res) => {
         try {
             // console.log(req.params.id);
-            const { name, description, price, image, category } = req.body
+            const { name, description, price, image, category, stock } = req.body
             if (req.files) {
                 // console.log(req.params.id);
                 const product = await ProductModel.findById(req.params.id)
