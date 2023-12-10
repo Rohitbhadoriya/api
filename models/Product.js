@@ -56,12 +56,12 @@ const productSchema = new mongoose.Schema(
 
     image: {
       public_id: {
-          type: String,
+        type: String,
       },
       url: {
-          type: String
+        type: String
       }
-  },
+    },
     category: {
       type: String,
       // required: true,

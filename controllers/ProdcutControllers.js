@@ -1,71 +1,72 @@
 const ProductModel = require('../models/Product')
 const cloudinary = require('cloudinary').v2;
-cloudinary.config({ 
-    cloud_name: 'dvhcd5oaz', 
-    api_key: '377969336692132', 
-    api_secret: 'ck52LMl4pM1JvZikeMw0cZNtx00' 
-  });
+cloudinary.config({
+    cloud_name: 'dvhcd5oaz',
+    api_key: '377969336692132',
+    api_secret: 'ck52LMl4pM1JvZikeMw0cZNtx00'
+});
 
-class ProductControllers{
-    static getallproduct = async(req,res)=>{
-        try{
+class ProductControllers {
+    static getallproduct = async (req, res) => {
+        try {
             const product = await ProductModel.find()
             // console.log(category);
             res.status(201).json({
                 status: 'success',
                 message: 'successfull',
                 product,
-              })
-        }catch(error){
+            })
+        } catch (error) {
             console.log(error);
         }
     }
     //admin
-    static createproduct = async(req,res)=>{
-        try{
-            const{name, description, price, image, category}= req.body
+    static createproduct = async (req, res) => {
+        try {
+            const { name, description, price, image, category, stock } = req.body
             const file = req.files.image
-            const image_upload = await cloudinary.uploader.upload(file.tempFilePath,{
-                folder:'productimageApi'
+            const image_upload = await cloudinary.uploader.upload(file.tempFilePath, {
+                folder: 'productimageApi'
             })
             const result = new ProductModel({
-                name:name,
-                description:description,
-                price:price,
-                category:category,
-                image:{
-                    public_id:image_upload.public_id,
-                    url:image_upload.secure_url
+                name: name,
+                description: description,
+                price: price,
+                category: category,
+                stock: stock,
+                image: {
+                    public_id: image_upload.public_id,
+                    url: image_upload.secure_url
                 }
-                })
-                await result.save()
-                res.status(201).json({
-                    status: "success",
-                    message: "Product Inserted Successfully 😃🍻",
-                });
-  
-        }catch(error){
+            })
+            await result.save()
+            res.status(201).json({
+                status: "success",
+                message: "Product Inserted Successfully 😃🍻",
+            });
+
+        } catch (error) {
             console.log(error);
         }
     }
-    static getallproductdetail = async(req,res)=>{
-        try{
+    static getallproductdetail = async (req, res) => {
+        try {
             //    console.log(req.params.id);
-        const product = await ProductModel.findById(req.params.id)
-        res.status(201).json({
-            status: 'success',
-            message: 'successfull',
-            product,
-          })
-        }catch(error){
+            const product = await ProductModel.findById(req.params.id)
+            res.status(201).json({
+                status: 'success',
+                message: 'successfull',
+                product,
+            })
+        } catch (error) {
             console.log(error);
         }
     }
-    static updateproduct = async(req,res)=>{
-        try{
+    static updateproduct = async (req, res) => {
+        try {
             // console.log(req.params.id);
-            const{name, description, price, image, category}= req.body
-            if(req.files){
+            const { name, description, price, image, category } = req.body
+            if (req.files) {
                 // console.log(req.params.id);
                 const product = await ProductModel.findById(req.params.id)
                 // console.log(product);
@@ -73,28 +74,30 @@ class ProductControllers{
                 // console.log(imageid);
                 await cloudinary.uploader.destroy(imageid)
                 const file = req.files.image
-                const image_upload = await cloudinary.uploader.upload(file.tempFilePath,{
-                    folder:'productimageApi'
+                const image_upload = await cloudinary.uploader.upload(file.tempFilePath, {
+                    folder: 'productimageApi'
                 })
-                var data={
-                name:name,
-                description:description,
-                price:price,
-                category:category,
-                image:{
-                    public_id:image_upload.public_id,
-                    url:image_upload.secure_url
+                var data = {
+                    name: name,
+                    description: description,
+                    price: price,
+                    category: category,
+                    stock: stock,
+                    image: {
+                        public_id: image_upload.public_id,
+                        url: image_upload.secure_url
 
                     }
 
                 }
 
-            }else{
-                var data ={
-                        name:name,
-                        description:description,
-                        price:price,
-                        category:category
+            } else {
+                var data = {
+                    name: name,
+                    description: description,
+                    price: price,
+                    category: category,
+                    stock: stock
                 }
             }
             const update = await ProductModel.findByIdAndUpdate(req.params.id, data)
@@ -102,26 +105,20 @@ class ProductControllers{
                 status: 'success',
                 message: 'successfull',
                 update,
-              })
-        }catch(error){
+            })
+        } catch (error) {
             console.log(error);
         }
     }
-    static deleteproduct = async(req,res)=>{
-        try{
 
-        }catch(error){
-            console.log(error);
-        }
-    }
-    static productdelete = async(req,res)=>{
-        try{
+    static productdelete = async (req, res) => {
+        try {
             await ProductModel.findByIdAndDelete(req.params.id)
             res.status(201).json({
                 status: 'success',
                 message: 'Delete Successfully',
-              })
-        }catch(error){
+            })
+        } catch (error) {
             console.log(error);
         }
     }
