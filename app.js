@@ -1,16 +1,17 @@
-const express = require ('express')
+const express = require('express')
 const app = express()
-const dotenv = require ('dotenv')
-const web = require ('./routes/web')
-dotenv.config({path:'./.env'})
+const dotenv = require('dotenv')
+const web = require('./routes/web')
+dotenv.config({ path: './.env' })
 const connectdb = require('./db/connectdb')
 const cors = require('cors')
 app.use(cors()) // for api communication in react
+app.use(express.json())
 
 
 const fileUpload = require("express-fileupload");//for file upload
 // for file upload
-app.use(fileUpload({useTempFiles: true}));
+app.use(fileUpload({ useTempFiles: true }));
 const cookieParser = require('cookie-parser')
 
 
@@ -21,7 +22,7 @@ connectdb()
 
 
 // loadroute
-app.use('/api',web)
+app.use('/api', web)
 
 
 
@@ -29,6 +30,6 @@ app.use('/api',web)
 
 
 //server create
-app.listen(process.env.PORT,()=>{
+app.listen(process.env.PORT, () => {
     console.log(`Server is running on localhost: ${process.env.PORT}`)
 })
