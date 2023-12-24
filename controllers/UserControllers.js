@@ -26,7 +26,7 @@ class UserControllers {
     static getuserdetails = async (req, res) => {
         try {
             // const {id, name, email} = req.data1
-            const user = await UserModel.findById(req.params.id)
+            const user = await UserModel.findById(req.data1.id)
             // console.log(user)
             res.status(201).json({
                 status: 'success',

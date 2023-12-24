@@ -6,7 +6,7 @@ const CategoryControllers = require('../controllers/CategoryControllers')
 const ProductControllers = require('../controllers/ProdcutControllers')
 //usercontrollers
 router.get('/getalluser', UserControllers.getalluser)
-router.get('/getuserdetails/:id', checkauth, UserControllers.getuserdetails)
+router.get('/me', checkauth, UserControllers.getuserdetails)
 router.post('/userinsert', UserControllers.userinsert)
 router.post('/verifylogin', UserControllers.verifylogin)
 router.get('/logout/:id', UserControllers.logout)
