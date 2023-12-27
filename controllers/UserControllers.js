@@ -140,7 +140,7 @@ class UserControllers {
             // const { id } = req.data1
             const { old_password, new_password, confirmpassword } = req.body;
             if (old_password && new_password && confirmpassword) {
-                const user = await UserModel.findById(req.params.id);
+                const user = await UserModel.findById(req.data1.id);
                 const ismatch = await bcrypt.compare(old_password, user.password);
                 if (!ismatch) {
                     res
@@ -154,7 +154,7 @@ class UserControllers {
 
                     } else {
                         const newHashpassword = await bcrypt.hash(new_password, 10);
-                        await UserModel.findByIdAndUpdate(req.params.id, {
+                        await UserModel.findByIdAndUpdate(req.data1.id, {
                             $set: { password: newHashpassword },
                         });
                         res.status(201).json({
@@ -182,7 +182,7 @@ class UserControllers {
             // const { id } = req.data1
             if (req.files) {
                 // Update the profile of user
-                const user = await UserModel.findById(req.params.id)
+                const user = await UserModel.findById(req.data1.id)
                 const image_id = user.image.public_id
                 // console.log(image_id)
                 await cloudinary.uploader.destroy(image_id)
@@ -210,7 +210,7 @@ class UserControllers {
             }
 
             // Update Code
-            const result = await UserModel.findByIdAndUpdate(req.params.id, data)
+            const result = await UserModel.findByIdAndUpdate(req.data1.id, data)
 
             res.status(200).json({
                 success: true,
