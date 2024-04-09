@@ -108,7 +108,7 @@ class UserControllers {
                     const isMatched = await bcrypt.compare(password, user.password)
                     if (isMatched) {
                         const token = jwt.sign({ ID: user._id }, 'rohit@1234');
-                        // console.log(token)
+                        console.log(token)
                         res.cookie('token', token)
                         res.status(201).json({
                             status: 'success',
