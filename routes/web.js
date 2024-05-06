@@ -4,6 +4,8 @@ const router = express.Router()
 const checkauth = require('../middleware/auth')
 const CategoryControllers = require('../controllers/CategoryControllers')
 const ProductControllers = require('../controllers/ProdcutControllers')
+const PaymentController = require('../controllers/PaymentController')
+const OrderController = require('../controllers/OrderController')
 //usercontrollers
 router.get('/getalluser', UserControllers.getalluser)
 router.get('/me', checkauth, UserControllers.getuserdetails)
@@ -27,4 +29,14 @@ router.get('/getallproduct', ProductControllers.getallproduct)
 router.get('/getallproductdetail/:id', ProductControllers.getallproductdetail)
 router.post('/updateproduct/:id', ProductControllers.updateproduct)
 router.get('/productdelete/:id', ProductControllers.productdelete)
+// Payment Controller
+router.post('/payment/process', PaymentController.processPayment)
+router.get('/stripeapiKey', PaymentController.sendStripeApiKey)
+
+// Order Contoller 
+router.post('/order/create', checkauth, OrderController.newOrder)
+
+
+
+
 module.exports = router
